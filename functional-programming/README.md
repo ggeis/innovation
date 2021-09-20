@@ -43,6 +43,7 @@ We must reckon that these particular Typescript declarations are not very intere
 ## Purity
 Purity is a characteristic of some functions. A pure function is a function that is predictable (given the same input always returns the same output) and that has no side effects. Pure functions make code easier to read, understand, test, debug, refactor, decompose and compose. 
 
+![A image](https://static.observableusercontent.com/files/f237a6d32b94506e2a22bdf93451105c3b1942717b8407468f129288442dbffbcfc29cfe731bba98b026dfc8ff7ffdd9081acb8b0b512cb4fe53b4bf2c7fe6e7)
 *Pure functions are closer to mathematical functions, but with one possible result*
 
 Objects are the structures our model is shaped on, and functions are the machinery that moves the state of this model forward. The assembly of small functions into bigger ones allow for rewarding and extendible behaviors. As functions tend to be more versatile than the data that makes up our business model, function *composition* is the cornerstone of modern software: we can develop complex computation without renouncing to decoupling, flexibility and reusability. Pure functions are specially convenient on this regard because *pure functions always combine into pure functions*, and pure functions bring topmost excellence on correctness, parallelization and program flow no matter how many pieces they are composed from.
