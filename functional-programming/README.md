@@ -185,3 +185,5 @@ This implies all the majesty of *sustituability*: we can replace a pure function
 
 With substituability comes easier equational reasoning, rewrittability and memoization.
 These are the causes of side-effects but most of the times they concur as a mix of them. Javascript deliberated flexibility and ubiquitous vocation makes effectful computations and impurity a great deal of our codebases.
+
+*Refactor pure functions is the easiest path to efficiency, gradually transform the functions you have into the functions you need *
