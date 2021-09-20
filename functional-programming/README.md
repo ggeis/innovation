@@ -175,4 +175,13 @@ function getPrice(price, country) {
 
 A more appropiate name for external purity is referential transparency.
 
+## Referential transparency 
+
+In the previous section we have defined what a pure function is by negation, mostly identifing the side-effects that prevents a function from being pure. But the formal and affirmative definition of a pure function comes from the referential transparency. A pure function is a function that has referential transparency.
+
+Referencial transparency, also called idempotence, exists when there exists a pure mapping between the function arguments and its return value. 
+
+This implies all the majesty of *sustituability*: we can replace a pure function with its output value and the application will keeping doing exactly the same. 
+
+With substituability comes easier equational reasoning, rewrittability and memoization.
 These are the causes of side-effects but most of the times they concur as a mix of them. Javascript deliberated flexibility and ubiquitous vocation makes effectful computations and impurity a great deal of our codebases.
