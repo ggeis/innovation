@@ -187,3 +187,10 @@ With substituability comes easier equational reasoning, rewrittability and memoi
 These are the causes of side-effects but most of the times they concur as a mix of them. Javascript deliberated flexibility and ubiquitous vocation makes effectful computations and impurity a great deal of our codebases.
 
 *Refactor pure functions is the easiest path to efficiency, gradually transform the functions you have into the functions you need *
+
+## Immutability 
+An immutable value is a value that, once created, cannot be changed. Primitive types are immutable by default, but for objects you need a strategy.
+Immutability refers to the simple idea that data should not mutate. If there is such a thing as a pure obect it is the immutable object. A shared goal between purity and immutability is to provide a safe structure to rely on. A trustable structure that enables flow, immersion and productivity without the burden of remember, know-how and keeping track of incidental complexity and the bugs it brings. This is particulary pertinent in the asynchronous world of Javascript, where objects are shuttled and spreaded between scopes and interfaces in complex ways. Mutability is the default setup of Javascript Object property accessors, you get elasticity and tolerance in exchange of the shared-state side effect that may lurk unnoticed till the execution of the program.
+
+### The canary of the mine
+Fortunately, and thanks to types ingenuity, you can lift immutabilitity to the compilation realm, in this case Typescripts own `const` (maybe a bit obtrusive) and `readonly` keywords will check and rest assure immutability during compilation:
