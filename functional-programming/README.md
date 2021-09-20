@@ -222,31 +222,9 @@ const immutableEmployee = {
   }
 } as const;
 immutableEmployee.job.employer.manager.name = "Peter"; // compilation error
-/*
-// 'as const' freezes the object nested values with deep readonly recursion
-    type InternalType_immutableEmployee = {
-      readonly age: 30;
-      readonly name: "John";
-      readonly job: {
-        readonly role: "accountant";
-        readonly employer: {
-          readonly company: {
-            readonly name: "Acme";
-          };
-          readonly manager: {
-            readonly name: "Brenda";
-          };
-        };
-      };
-    };
-*/
 
 /* 
 IMMUTABLE TYPE
-Uses 3 powerful features of TS: 
-- readonly, 
-- generics 
-- type-recursion  
 */
 
 type Immutable<T> = {
