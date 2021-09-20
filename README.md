@@ -1,5 +1,6 @@
-![image](https://user-images.githubusercontent.com/29042646/134084711-3478fcaa-2717-459e-8b71-755bab5ab6f5.png)
+![image](https://user-images.githubusercontent.com/29042646/134085216-a098eedb-4a65-4f94-a5ac-d433c4a8b946.png)
 
-# Beyond prototypal javascript
-**Innovation project**
 ## Table of contents
+- [What is functional programming?](./functional-programming/README)
+- Objects
+- Functions
