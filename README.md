@@ -1,1 +1,3 @@
-# What is functional programming?
+# Beyond prototypal javascript
+### *Innovation project*
+Table of contents
