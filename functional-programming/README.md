@@ -14,3 +14,5 @@ We will start with the only functional programming principle that is subjective.
 *Comparison between imperative (left) vs declarative (right) code techniques.*
 
 A familiar example of declarative programming is GraphQL, a language that lets us compose a restricted set of expressions to shape the desired result, abstracting itself completely away from all the mechanisms and internal processes that the GraphQL resolvers will use to obtain this declared output. Other examples of declarative programs are the Webpack configuration and plugin system, or the fluent APIs of some React-based libraries and React itself.
+
+Another example is the `map` function of the Array `prototype`. It's a high-order (second-order) function, we'll see later why and how implementing `map` makes the Array built-in data type a functor. But for now, let's see how abstracting away the loop to the more specialized `map` has not just freed us from the repetitive responsibility of properly managing the index access state, but has brought a more declarative, decomposed, and type-checkable syntax.
