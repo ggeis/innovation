@@ -256,7 +256,7 @@ By convention, it's recommended that a constructor function name is capitalized.
   return now.date;
 }
  ```
-Classes also provide another useful perks like private members, default values, static functions, etc., at the expanse of an exogenous mental model. In short, classes are syntactic sugar that abstracts away the mundane prototype scaffolding and are very helpful as long as you keep in mind what is going on beyond the surface and don't overcommit to the tightly-coupled and rigid architecture that inheritance might lean to.
+Classes also provide another useful perks like private members, default values, static functions, etc., at the expanse of an foreign mental model. In short, classes are syntactic sugar that abstracts away the mundane prototype scaffolding and are very helpful as long as you keep in mind what is going on beyond the surface and don't overcommit to the tightly-coupled and rigid architecture that inheritance might lean to.
 ## OLOO (Objects Linked to Other Objects)
 This pattern still uses implicit prototype linking, in which object and proto life cycles are interwined, but doesn't employ neither classes or prototype semantics but `Object.create`.
 
