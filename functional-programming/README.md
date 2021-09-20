@@ -221,9 +221,7 @@ const immutableEmployee = {
     }
   }
 } as const;
-immutableEmployee.job.employer.manager.name = "Peter";
-//  error: (property) name: "Brenda"
-//  Cannot assign to 'name' because it is a read-only property
+immutableEmployee.job.employer.manager.name = "Peter"; // compilation error
 /*
 // 'as const' freezes the object nested values with deep readonly recursion
     type InternalType_immutableEmployee = {
@@ -249,7 +247,6 @@ Uses 3 powerful features of TS:
 - readonly, 
 - generics 
 - type-recursion  
-Credits: https://stackoverflow.com/a/59298465
 */
 
 type Immutable<T> = {
@@ -282,8 +279,6 @@ const immutableAndTypedEmployee: Immutable<Employee> = {
   }
 };
 immutableAndTypedEmployee.job.employer.manager.name = "Peter";
-immutableAndTypedEmployee.job.employer.arrays?.push("d");
-// error: (property) name: string
-// Cannot assign to 'name' because it is a read-only property.ts(2540)
+immutableAndTypedEmployee.job.employer.arrays?.push("d"); // compilation error
 
 ```
