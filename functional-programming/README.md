@@ -58,6 +58,7 @@ We should favor purity whenever is possible, but a lot of what we do (I/O, excep
 What we are meaning by side-effects is *effectful computations*, which gloom our codebases because handling them often involves to detour from abstract golden paths. Real-world implementations certanly carry integration, external agency, time handling, latencies, delays, failure... and  lot of defects come from a unappropiate engineering of those material operations.
 
 Effectful computations cannot be resolved in a pure manner and there is 6 categories of them:
+* * *
 ### Effectful computations
 
 - **Non-terminating** 
