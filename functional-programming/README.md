@@ -55,4 +55,4 @@ return squareRootOfEach([0, 1, 4, 9, 16, 25, 36, 49, 64, 81])
 *Pure functions glued into pure functions using basic calls*
 
 We should favor purity whenever is possible, but a lot of what we do (I/O, exception control, time) entail side-effects.
-What we are meaning by side-effects is *effectful computations*, which gloom our codebases because handling them often involves to detour from abstract golden paths. Real-world implementations certanly carry integration, external agency, time handling, latencies, delays, failure... and  lot of defects come from a unappropiate engineering of those material operations
+What we are meaning by side-effects is *effectful computations*, which gloom our codebases because handling them often involves to detour from abstract golden paths. Real-world implementations certanly carry integration, external agency, time handling, latencies, delays, failure... and  lot of defects come from a unappropiate engineering of those material operations.
