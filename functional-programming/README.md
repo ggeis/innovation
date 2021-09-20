@@ -61,7 +61,7 @@ Effectful computations cannot be resolved in a pure manner and there is 6 catego
 
 * * *
 
-- ** Non-terminating **
+- Non-terminating 
 
  Some functions defy *run-to-completion* rule. It may be a defect or something deliberate like the infinite cycle.
  ```javascript 
@@ -70,7 +70,7 @@ while (true)
 
   *Generators*, a special kind of functions which can be interrupted and resumed, also belong to this category, even if they provide patterns to cordon other impure effects within itselves. More on that later.
 
-- ** Non-deterministic **
+- Non-deterministic
 
  Nondeterministic computations, given the same input and state, return different results between different calls. When purposeful they introduce RNG or a time-bound constant that varies according to the moment of evaluation.
  We have to ensure *superposition*, validation of every possible outcome, mostly with types but sometimes a serialization should be set in place to acknowlege for it.
