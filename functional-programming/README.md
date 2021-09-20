@@ -94,7 +94,7 @@ throw new Error('Error message');
 
   ```javascript 
 const raiseTo = (pow) => (num) => {
-    console.log(\`calculating ${num}^${pow}...\`);
+    console.log(`calculating ${num}^${pow}...`);
     return pow === 0 ? 1 : Math.pow(num, pow);
 }
 ```
@@ -117,7 +117,7 @@ Object.defineProperty(IntensiveHundred, 'calculated', {
 });
 
 const raiseTo = (pow) => (numObj) => {
-  console.log(\`calculating $\{numObj.calculated\}^$\{pow\} ...\`);
+  console.log(`calculating ${numObj.calculated\}^${pow} ...`);
   return pow === 0 ? 1 : Math.pow(numObj.calculated, pow);
 };
 
