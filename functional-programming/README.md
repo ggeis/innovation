@@ -137,3 +137,7 @@ raiseToZero(IntensiveHundred);
   A classic example of Javascript shared state is the problematic \`this\` keyword, which gives you free access to instance, global or bind level data outside of the method scope.
 
   Every program holds state. The real question is whether it qualifies as functional state, there is different ways of handling state in a functional way: there is subtle differences between the different types of state access (read-only, write-only, read/write), and strategies to do it safely (change detection, types, reactivity...), there is also advanced functional structures that camouflage shared state and other effects in boxes called monads that are compatible with pure functions, we'll arrive there at some point, but for now let's say the first functional measure against shared state is immutability.
+  
+  * * *
+
+These are the causes of side-effects but most of the times they concur as a mix of them. Javascript deliberated flexibility and ubiquitous vocation makes effectful computations and impurity a great deal of our codebases.
