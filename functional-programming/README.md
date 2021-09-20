@@ -194,3 +194,96 @@ Immutability refers to the simple idea that data should not mutate. If there is 
 
 ### The canary of the mine
 Fortunately, and thanks to types ingenuity, you can lift immutabilitity to the compilation realm, in this case Typescripts own `const` (maybe a bit obtrusive) and `readonly` keywords will check and rest assure immutability during compilation:
+```typescript
+const mutableEmployee = {
+  age: 30,
+  name: "John",
+  job: {
+    role: "accountant",
+    employer: {
+      company: { name: "Acme" },
+      manager: { name: "Brenda" }
+    }
+  }
+};
+mutableEmployee.job.employer.manager.name = "Peter";
+
+/* AS CONST */
+
+const immutableEmployee = {
+  age: 30,
+  name: "John",
+  job: {
+    role: "accountant",
+    employer: {
+      company: { name: "Acme" },
+      manager: { name: "Brenda" }
+    }
+  }
+} as const;
+immutableEmployee.job.employer.manager.name = "Peter";
+//  error: (property) name: "Brenda"
+//  Cannot assign to 'name' because it is a read-only property
+/*
+// 'as const' freezes the object nested values with deep readonly recursion
+    type InternalType_immutableEmployee = {
+      readonly age: 30;
+      readonly name: "John";
+      readonly job: {
+        readonly role: "accountant";
+        readonly employer: {
+          readonly company: {
+            readonly name: "Acme";
+          };
+          readonly manager: {
+            readonly name: "Brenda";
+          };
+        };
+      };
+    };
+*/
+
+/* 
+IMMUTABLE TYPE
+Uses 3 powerful features of TS: 
+- readonly, 
+- generics 
+- type-recursion  
+Credits: https://stackoverflow.com/a/59298465
+*/
+
+type Immutable<T> = {
+  readonly [K in keyof T]: Immutable<T[K]>;
+};
+
+type Employee = {
+  age: number;
+  name: string;
+  job: {
+    role: string;
+    employer: {
+      company: { name: string };
+      manager: { name: string };
+      arrays?: string[];
+    };
+  };
+};
+
+const immutableAndTypedEmployee: Immutable<Employee> = {
+  age: 30,
+  name: "John",
+  job: {
+    role: "accountant",
+    employer: {
+      company: { name: "Acme" },
+      manager: { name: "Brenda" },
+      arrays: ["a", "b", "c"]
+    }
+  }
+};
+immutableAndTypedEmployee.job.employer.manager.name = "Peter";
+immutableAndTypedEmployee.job.employer.arrays?.push("d");
+// error: (property) name: string
+// Cannot assign to 'name' because it is a read-only property.ts(2540)
+
+```
