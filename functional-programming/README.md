@@ -56,3 +56,75 @@ return squareRootOfEach([0, 1, 4, 9, 16, 25, 36, 49, 64, 81])
 
 We should favor purity whenever is possible, but a lot of what we do (I/O, exception control, time) entail side-effects.
 What we are meaning by side-effects is *effectful computations*, which gloom our codebases because handling them often involves to detour from abstract golden paths. Real-world implementations certanly carry integration, external agency, time handling, latencies, delays, failure... and  lot of defects come from a unappropiate engineering of those material operations.
+
+Effectful computations cannot be resolved in a pure manner and there is 6 categories of them:
+
+* * *
+
+- ** Non-terminating **
+
+ Some functions defy *run-to-completion* rule. It may be a defect or something deliberate like the infinite cycle.
+ ```javascript 
+while (true)
+```
+
+  *Generators*, a special kind of functions which can be interrupted and resumed, also belong to this category, even if they provide patterns to cordon other impure effects within itselves. More on that later.
+
+- ** Non-deterministic **
+
+ Nondeterministic computations, given the same input and state, return different results between different calls. When purposeful they introduce RNG or a time-bound constant that varies according to the moment of evaluation.
+ We have to ensure *superposition*, validation of every possible outcome, mostly with types but sometimes a serialization should be set in place to acknowlege for it.
+
+- **Exceptions**
+
+ This is similar to the non-terminating effect, the difference is that it's the code itself which *imperatively* throws the exception that ends the program in a controlled yet impure manner.
+ ```javascript
+throw new Error('Error message');
+```
+
+- **Continuations**
+ 
+ This type of effects impact more on the `goto`-featured programming languages. As Javascript is not one of those, continuation effects often refer to callback origin non-terminating effects.
+
+- **I/O**
+
+ Both input and output are impure by being engaged in a continuous mutating intercourse with physical devices that can have blocking states, permission denial, network down, damage and other occurrences independent of our business logic. But this is not the full story.
+
+ Input extra impurity might also come from the non-determinism of its interactivity. 
+
+ Output's potential source of impurity will serve us to introduce another concept of functional programming: *lazy evaluation*, let's see an example:
+
+  ```javascript 
+const raiseTo = (pow) => (num) => {
+    console.log(\`calculating $\{num\}^$\{pow\}...\`);
+    return pow === 0 ? 1 : Math.pow(num, pow);
+}
+```
+
+ In normal conditions this `console.log` is inoffensive. `raiseTo` could pretend it´s a pure, even if a bit wasteful, function. But let's write a slightly different version of it to prove the point:
+
+```javascript 
+const IntensiveHundred = {
+  base: 1
+};
+
+Object.defineProperty(IntensiveHundred, 'calculated', {
+  get() {
+    let num = 0;
+    for (let i = 0; i < 100; i++) {
+      num = num + this.base;
+    }
+    return num;
+  }
+});
+
+const raiseTo = (pow) => (numObj) => {
+  console.log(\`calculating $\{numObj.calculated\}^$\{pow\} ...\`);
+  return pow === 0 ? 1 : Math.pow(numObj.calculated, pow);
+};
+
+const raiseToZero = raiseTo(0);
+raiseToZero(IntensiveHundred);
+```
+
+   We can see how after adding some composition (getter), resources are allocated and spared just to feed the `console.log` call even if lazy evaluation is discarding the calculation for the actual returning result. This summarizes the doppelgänger problem with the output side-effects, it is something that our program definitely does but is not really a computation, it might look like a neutral operation but it is not, it stacks effects, and breaks referential transparency.
