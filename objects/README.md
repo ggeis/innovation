@@ -128,3 +128,5 @@ Until this point, we have been reviewing the ways of creating a solitary object,
 
 ## Inheritance
 Inheritance is the bread-and-butter pattern for prototyping type hierarchies. Javascript implements it with one of the many applications of prototypes. Let's set up a basic prototype chain.
+
+This time, we're going to use the first argument of `Object.create` with something different than the native `Object.prototype`:
