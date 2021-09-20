@@ -140,6 +140,7 @@ raiseToZero(IntensiveHundred);
   Every program holds state. The real question is whether it qualifies as functional state, there is different ways of handling state in a functional way: there is subtle differences between the different types of state access (read-only, write-only, read/write), and strategies to do it safely (change detection, types, reactivity...), there is also advanced functional structures that camouflage shared state and other effects in boxes called monads that are compatible with pure functions, we'll arrive there at some point, but for now let's say the first functional measure against shared state is immutability.
   
   * * *
+  ### An unexpected plot twist
   
   There is two sides of purity: internal and external. It's convenient that a function is pure both from the inside and the outside, but by convention purity qualification is decided on the external.
 In this regard is important to treat input values as immutable. Ideally, input values should be immutable values and the only thing its changed in the function. It's also good that the return value is immutable too.
