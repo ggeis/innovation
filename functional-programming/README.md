@@ -32,3 +32,6 @@ function declarative_statements () {
   return [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(num => Math.pow(num,2));
 }
 ```
+Having demostrated the declarative edge, it's fair to say that the imperative way of coding also have an important place in Javascript, as it tends to be faster and more optimized when done properly and in small scale, or when we temporary or permanently prioritize low level synergies rather than collaboration and mantainability.
+### A first perspective on types
+We can find another very explicit example of declarative programming in Typescript and its, rightly named so, `declare` keyword
