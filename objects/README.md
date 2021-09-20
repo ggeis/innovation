@@ -130,3 +130,100 @@ Until this point, we have been reviewing the ways of creating a solitary object,
 Inheritance is the bread-and-butter pattern for prototyping type hierarchies. Javascript implements it with one of the many applications of prototypes. Let's set up a basic prototype chain.
 
 This time, we're going to use the first argument of `Object.create` with something different than the native `Object.prototype`:
+```typescript
+function() {
+  const moment = Object.create(Object.prototype, {
+    date: { 
+      value: Temporal.now.plainDateTimeISO(), 
+      writable: true,
+      enumerable: true 
+    }
+  });
+  const localizedMoment = Object.create(moment, {
+    locale: {
+      value: Intl.DateTimeFormat().resolvedOptions().locale,
+      writable: true,
+      enumerable: true
+    },
+    localizedDate: {
+      get() {
+        return this.date.toLocaleString(this.locale);
+      },
+      enumerable: true
+    }
+  });
+  moment.date = moment.date.add({days: 5});
+  assert(localizedMoment.date === moment.date);
+  return localizedMoment.localizedDate;
+}
+```
+`localizedMoment` is inheriting from `moment`, we have just created a prototypal link between the two objects. Any properties of the parent (hereafter called the *prototype*) are accessible from the child object. An object can only have a single prototype, but they can be chained down. We will have access to every ancestors properties via *dot notation* only (`Object.keys` and similar will traverse the object own properties but not the ones coming from the prototype). Note how `moment.date` and `localizedMoment.date` point to the same exact reference. Even if `moment` is used as a go-in-between facilitator, `moment` is a object and can be manipulated as such, its not like a kind of *abstract class*, or something created from thin air at the point of forming the inheritance association.
+
+`localizedMoment.localizedDate` seems a bit redundant so let's do some naming that will serve us to explain the prototype lookup mechanism:
+```typescript
+function() {
+  const moment = Object.create(Object.prototype, {
+    date: {
+      value: Temporal.now.plainDateTimeISO(),
+      enumerable: true
+    }
+  });
+  const localizedMoment = Object.create(moment, {
+    locale: {
+      value: Intl.DateTimeFormat().resolvedOptions().locale,
+      enumerable: true
+    },
+    date: {
+      get() {
+        return Object.getPrototypeOf(this).date.toLocaleString(this.locale);
+      },
+      enumerable: true
+    }
+  });
+  return localizedMoment.date;
+}
+```
+As we can see now we have two `date` properties, the one from the child and the one from the prototype, that might be colliding because they have the same exact concise name but a different reference an even type (`Temporal.PlainDateTime` vs `string`). This is not the case in Javascript as the prototype resolution mechanism flows up from the calling object to its linked object (and so on), allowing that any newly derived object can differentiate itself from its parent with new behavior. New behavior includes adding new properties or, like in this example, overriding an existing property from the linked object. This pattern is know as *shadowing* a property. 
+So any dot-notation access to `localizedMoment.date` will be satisfied with the first `date` it encounters in a bottom-up traversal of the prototype chain.
+
+Using developer tools we can clearly see how the inheritance is implemented as a prototype chain, with native Object at the bottom, which is the top from a hierarchical perspective.
+
+Also we still have access to the `moment` and `date` through the prototype as the getter exemplifies, so we are shadowing and neither overriding nor overwriting.
+
+Object association through the prototypes is completely different from the inheritance implementation in OOP languages, in which instances gain copies of the inherited data. In Javascript it's links not copies.
+
+## Constructor functions
+
+Up to this point we have been creating very inelastic objects regarding its data. We can use parametrizable functions to initialize objects populated with different data values, these *constructor functions* can also encapsulate the enforcement of some preconditions.
+
+```typescript
+function() {
+  function Moment(date) {
+    if (!new.target) new Moment(date);
+    this.date = date || Temporal.now.plainDateTimeISO();
+  }
+
+  function LocalizedMoment(date, locale) {
+    if (!new.target) new LocalizedMoment(date, locale);
+    Object.assign(this, new Moment(date));
+    this.locale = locale || Intl.DateTimeFormat().resolvedOptions().locale;
+  }
+
+  Object.setPrototypeOf(LocalizedMoment.prototype, Moment.prototype);
+
+  LocalizedMoment.prototype.localize = function (locale) {
+    return this.date.toLocaleString(locale || this.locale);
+  };
+
+  assert(Moment.prototype.constructor === Moment);
+  assert(Moment.prototype.__proto__.constructor === Object);
+  assert(LocalizedMoment.prototype.constructor === LocalizedMoment);
+  assert(LocalizedMoment.prototype.__proto__.constructor === Moment);
+
+  const now = new LocalizedMoment(Temporal.now.plainDateTimeISO(), 'en-UK');
+  return now.localize('es-ES');
+}
+```
+By convention, it's recommended that a constructor function name is capitalized. It's important that we safeguard the usage of `new` (even if the caller forgets to) for the runtime to implicity point the `this` context of the constructor function to the newly created object. Notice how we also had to set the prototype link to state the parent-child relationship with `Object.setPrototypeOf`.
+
+ Also `localize()` is declared outside of the constructor function because, as the code is shared among, it is more efficient to bound it to the `prototype` and not allocating a new function copy for every instance.
