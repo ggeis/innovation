@@ -140,5 +140,38 @@ raiseToZero(IntensiveHundred);
   Every program holds state. The real question is whether it qualifies as functional state, there is different ways of handling state in a functional way: there is subtle differences between the different types of state access (read-only, write-only, read/write), and strategies to do it safely (change detection, types, reactivity...), there is also advanced functional structures that camouflage shared state and other effects in boxes called monads that are compatible with pure functions, we'll arrive there at some point, but for now let's say the first functional measure against shared state is immutability.
   
   * * *
+  
+  There is two sides of purity: internal and external. It's convenient that a function is pure both from the inside and the outside, but by convention purity qualification is decided on the external.
+In this regard is important to treat input values as immutable. Ideally, input values should be immutable values and the only thing its changed in the function. It's also good that the return value is immutable too.
+  ```javascript 
+// impure
+function applySort(arr) {
+  return arr.sort(); 
+}
+
+// externally pure
+function sort(arr) {
+  return applySort([...arr]);
+}
+
+// externally pure
+function createMapById(list) {
+  const map = Object.create(null);
+  list.forEach(function addToMap(item) {
+    map[item.id] = item;
+  });
+  return Object.freeze(map);
+}
+
+const vatTax = Object.freeze({ es: 21 }); // free variable: scalar or immutable
+
+// pure
+function getPrice(price, country) {
+  return price * (1 + vatTax[country] / 100);
+}
+
+```
+
+A more appropiate name for external purity is referential transparency.
 
 These are the causes of side-effects but most of the times they concur as a mix of them. Javascript deliberated flexibility and ubiquitous vocation makes effectful computations and impurity a great deal of our codebases.
