@@ -79,3 +79,52 @@ const localizeDate = (date_: Temporal.PlainDateTime, locale_: string): string =>
 const localizedNow = localizeDate(date, locale);
 ```
 *`Temporal` to "replace" the flawed built-in `Date` (and the third-party libraries to handle it) with a immutable type*
+
+## Precise creation
+But as the point of this chapter is reviewing objects, let's refine the previous implementation with the convenient an fully functional `Object` API:
+```javascript
+function() {
+  const now = Object.create(
+    Object.prototype,
+    (() => {
+      const date = new Date(Date.now());
+      return {
+        date: {
+          value: new Date(date),
+          enumerable: true,
+          writable: false,
+          configurable: false,
+        },
+        locale: {
+          value: Intl.DateTimeFormat().resolvedOptions().locale,
+          enumerable: true,
+          writable: true,
+          configurable: false
+        },
+        localize: {
+          value: function (locale_) {
+            return date.toLocaleString(locale_ || this.locale);
+          },
+          enumerable: true,
+          writable: false,
+          configurable: false
+        }
+      };
+    })()
+  );
+  const localizedNow = now.localize();
+  return localizedNow;
+}
+```
+Using `Object.create(proto,[propertiesObject])` second parameter we obtain much more control on the properties behavior. In this case, with the `writable` data descriptor we protect `date` from hindered rewrites. `configurable` prevents deletion which makes for a more bulletproof object state in its journey through the codebase.
+
+Be aware that data descriptor `value` is not a *getter* accessor function, it's not executed every time the property is accessed but only once. Data accessors (getters/setters) are also available in the `propertiesObject` parameter, but they are mutually exclusive with `value` and `writable`. 
+
+Data descriptors are not enough as Date is not immutable, we also need to use other functional tools like *IIFE* (Immediately Invoked Function Expression) and *closures* to encapsulate the type and expose only a copy of it for potential external parallelizations. 
+
+Recreating objects and making copies for the sake of immutability is a common practice in FP, this can bring some conceptual misunderstandings or inefficiencies when testing equalities. Not even shallow value comparisons are not supported by Javascript runtime (Javascript is *duck-typed*, so it's inherently open-to developer discretion if two objects that share the same properties and values but have a different prototype, for example, should be considered equal or not. The application developer should define the objects equality rules). FP benefits not only from immutability, but also when simple and shallow objects are in charge of storing data.
+
+Until this point, we have been reviewing the ways of creating a solitary object, but as we start using multiple objects that share a shape, and we want to reuse the code while modeling relationships, we need more than this.
+
+## Inheritance
+Inheritance is the bread-and-butter pattern for prototyping type hierarchies. Javascript implements it with one of the many applications of prototypes. Let's set up a basic prototype chain.
