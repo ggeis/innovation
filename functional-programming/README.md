@@ -62,6 +62,7 @@ Effectful computations cannot be resolved in a pure manner and there is 6 catego
 ### Effectful computations
 
 - **Non-terminating** 
+ 
  Some functions defy *run-to-completion* rule. It may be a defect or something deliberate like the infinite cycle.
  ```javascript 
 while (true)
