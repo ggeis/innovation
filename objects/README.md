@@ -67,3 +67,15 @@ As hiring interviews demonstrate, there is a need for data structures and intens
 | Encapsulation     |                  |
 
 We should not confuse DS algorithmics with the object-oriented paradigm and some of its patterns. OOP spreads tight coupling and contracts to *every* entity in the model, much beyond the logarithmic performance pursuing of DS. OOP promotes specialized types as the unit of composition, which may lead to efferent coupling (a type depending on many others), abstractness, `super` chains, "explosion" of classes, cyclomatic complexity on back and forth conversions, etc. We can argue that Javascript is essentially suited for FP, but both angles are valid. Even some admixture is possible as long as we are aware of the possible incompatibilities of, in the end, two general ways of organizing and composing code. FP does function composition, generalized coarse-grained polymorphic functions that crosscut across data types. OPP does object composition, where each specialized type encapsulates fine-grained coupling between data and behavior via methods.
+
+The optimal functional approach to the problem (i.e., obtain a localized now) would be abstaining completely from using an object, and rely on independent immutable values (`Temporal` is ECMA Stage-2 proposal) and generalized arrow function:
+
+```javascript
+import { Temporal } from 'proposal-temporal';
+const date: Temporal.PlainDateTime = Temporal.now.plainDateTimeISO();
+const { locale } = Intl.DateTimeFormat().resolvedOptions();
+const localizeDate = (date_: Temporal.PlainDateTime, locale_: string): string =>
+  date_.toLocaleString(locale_);
+const localizedNow = localizeDate(date, locale);
+```
+*`Temporal` to "replace" the flawed built-in `Date` (and the third-party libraries to handle it) with a immutable type*
