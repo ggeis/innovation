@@ -1,3 +1,3 @@
 # Beyond prototypal javascript
-### *Innovation project*
-Table of contents
+**Innovation project**
+### Table of contents
