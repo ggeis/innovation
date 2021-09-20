@@ -107,4 +107,15 @@ const curry = (fn) => (...args1) =>
 
 const localizeDate = curry((locale, date) => date.toLocaleString(locale));
 ```
-`curry` mandates that you satisfy all the arguments of a function before it evaluates. Until that happens, curry keeps returning the *partially applied* functions with the remaining arguments waiting to be passed in, from first to last. This *discretization* delivers *lazy evaluation*, as until all arguments are provided the curried function won't be evaluated. This restricts a bit the functions that can be curriable (ES6 functions with optional parameters for example). With curried functions, the order of arguments is important as well. Normally, we don’t pay a lot of attention to the order in object-oriented or imperative doctrines. But in FP, argument order is crucial because it relies so much on partial application. We have to think how arguments should be arranged to benefit from partial evaluations.
+`curry` mandates that you satisfy all the arguments of a function before it evaluates. Until that happens, curry keeps returning the *partially applied* functions with the remaining arguments waiting to be passed in, from first to last. This *discretization* delivers *lazy evaluation*, as until all arguments are provided the curried function won't be evaluated. This restricts a bit the functions that can be curriable (ES6 functions with optional parameters, for instance, are excluded). With curried functions, the order of arguments is important as well. Normally, we don’t pay a lot of attention to the order in object-oriented or imperative doctrines. But in FP, argument order is crucial because it relies so much on partial application. We have to think how arguments should be arranged to benefit from partial evaluations.
+
+`curry` and `compose` are *combinator* functions (generic higher-order functions without any special bussiness logic on their own) and make for a common and powerful duo:
+```typescript   
+function() {
+  const localizeDate = curry((locale, date) => date.toLocaleString(locale));
+  const wholeHour = (date) => date.round({ smallestUnit: 'hour', roundingMode: 'floor' });
+  const uKHour = compose(localizeDate('en-UK'), wholeHour);
+  const date = Temporal.now.plainDateTimeISO();
+  return uKHour(date));
+}
+```
