@@ -42,7 +42,9 @@ declare function imperative_statements(): void;
 We must reckon that these particular Typescript declarations are not very interesting and far from functional, but we're effectively declaring *what* we expect from the `declarative_statements` and `imperative_statements` functions, and enable compilers and other static analysis tools to complain or act after this declaration (for example automatically writing documentation). The next step could well be moving this declarations out to a .d.ts specialized file. Or even extract this .d.ts to a different npm package that might be installed as a external development dependency, etc. As we said keep widening the distance between the *what* from the *how* is what declarative programming emphasizes.
 ## Purity
 Purity is a characteristic of some functions. A pure function is a function that is predictable (given the same input always returns the same output) and that has no side effects. Pure functions make code easier to read, understand, test, debug, refactor, decompose and compose. 
+
 *Pure functions are closer to mathematical functions, but with one possible result*
+
 Objects are the structures our model is shaped on, and functions are the machinery that moves the state of this model forward. The assembly of small functions into bigger ones allow for rewarding and extendible behaviors. As functions tend to be more versatile than the data that makes up our business model, function *composition* is the cornerstone of modern software: we can develop complex computation without renouncing to decoupling, flexibility and reusability. Pure functions are specially convenient on this regard because *pure functions always combine into pure functions*, and pure functions bring topmost excellence on correctness, parallelization and program flow no matter how many pieces they are composed from.
 ```typescript
 const raiseTo = (pow) => (num) => Math.pow(num, pow);
@@ -51,5 +53,6 @@ const squareRootOfEach = (array) => array.map(squareRootOf);
 return squareRootOfEach([0, 1, 4, 9, 16, 25, 36, 49, 64, 81])
 ```
 *Pure functions glued into pure functions using basic calls*
+
 We should favor purity whenever is possible, but a lot of what we do (I/O, exception control, time) entail side-effects.
 What we are meaning by side-effects is *effectful computations*, which gloom our codebases because handling them often involves to detour from abstract golden paths. Real-world implementations certanly carry integration, external agency, time handling, latencies, delays, failure... and  lot of defects come from a unappropiate engineering of those material operations
