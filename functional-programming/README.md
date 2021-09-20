@@ -127,3 +127,13 @@ raiseToZero(IntensiveHundred);
 ```
 
    We can see how after adding some composition (getter), resources are allocated and spared just to feed the `console.log` call even if lazy evaluation is discarding the calculation for the actual returning result. This summarizes the doppelgänger problem with the output side-effects, it is something that our program definitely does but is not really a computation, it might look like a neutral operation but it is not, it stacks effects, and breaks referential transparency.
+   
+   - **Shared State** 
+
+  Shared state is any variable, object, or memory space that exists in a shared scope, also the property of any object being passed or referenced between scopes. 
+
+  Shared state carries the curse of being potentially changed by any piece of code in the application, and detecting what part of the code did the change involves to trace all the history and check all the code that uses that variable and guess how it happened. This is specially painful when the shared state is intermittent and you have to have luck trying to catch it red-handed.
+
+  A classic example of Javascript shared state is the problematic \`this\` keyword, which gives you free access to instance, global or bind level data outside of the method scope.
+
+  Every program holds state. The real question is whether it qualifies as functional state, there is different ways of handling state in a functional way: there is subtle differences between the different types of state access (read-only, write-only, read/write), and strategies to do it safely (change detection, types, reactivity...), there is also advanced functional structures that camouflage shared state and other effects in boxes called monads that are compatible with pure functions, we'll arrive there at some point, but for now let's say the first functional measure against shared state is immutability.
