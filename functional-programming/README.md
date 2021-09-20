@@ -35,3 +35,11 @@ function declarative_statements () {
 Having demostrated the declarative edge, it's fair to say that the imperative way of coding also have an important place in Javascript, as it tends to be faster and more optimized when done properly and in small scale, or when we temporary or permanently prioritize low level synergies rather than collaboration and mantainability.
 ### A first perspective on types
 We can find another very explicit example of declarative programming in Typescript and its, rightly named so, `declare` keyword
+```typescript 
+declare function declarative_statements(): void;
+declare function imperative_statements(): void;
+```
+We must reckon that these particular Typescript declarations are not very interesting and far from functional, but we're effectively declaring *what* we expect from the `declarative_statements` and `imperative_statements` functions, and enable compilers and other static analysis tools to complain or act after this declaration (for example automatically writing documentation). The next step could well be moving this declarations out to a .d.ts specialized file. Or even extract this .d.ts to a different npm package that might be installed as a external development dependency, etc. As we said keep widening the distance between the *what* from the *how* is what declarative programming emphasizes.
+## Purity
+Purity is a characteristic of some functions. A pure function is a function that is predictable (given the same input always returns the same output) and that has no side effects. Pure functions make code easier to read, understand, test, debug, refactor, decompose and compose. 
+
