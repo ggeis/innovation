@@ -116,7 +116,7 @@ function() {
   return localizedNow;
 }
 ```
-Using `Object.create(proto,[propertiesObject])` second parameter we obtain much more control on the properties behavior. In this case, with the `writable` data descriptor we protect `date` from hindered rewrites. `configurable` prevents deletion which makes for a more bulletproof object state in its journey through the codebase.
+Using `Object.create(proto,[propertiesObject])` second parameter we obtain much more control on the properties behavior. In this case, with the `writable` data descriptor we protect `date` from hindered rewrites. `configurable` prevents deletion which makes for a more bulletproof object state in its dangerous journey through the codebase.
 
 Be aware that data descriptor `value` is not a *getter* accessor function, it's not executed every time the property is accessed but only once. Data accessors (getters/setters) are also available in the `propertiesObject` parameter, but they are mutually exclusive with `value` and `writable`. 
 
