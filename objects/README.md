@@ -339,3 +339,5 @@ function() {
 };
 ```
 `hasLocale` and `hasDate` are the mixins, in this case functions that return simple objects without further context, `Object.assign` in `LocalizedMoment` constructor function does all the gluing and linearization. This is a possible functional application of mixins, but you can do others like for instance extend a prototype or using them with a more OOP approach with classes. Adoption of mixins will bring more flexibility in modeling your objects, as objects won't inherit from each other but associate freely.
+
+Next: [Functions](../functions/README.md)
