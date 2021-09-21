@@ -41,7 +41,7 @@ function () {
 
 Here we are somehow pulling apart from functional programming, we got rid of the generalized function `localizeDate` in favor of the tightly coupled `localize` invokable method. The `now` literal might now resemble remotely a data structure. Functional programming must necessarily blend with data structures, particularly with the very low level and others that can take advantage of side effects and mutations to improve performance and reduce the computational complexity (*O-notation*) of some operations. Thankfully, properly designed data structures implement a *single designated type* and provide a contract of operations transparent for the functional workflow consumption.
 
-This is not the case for the `now` object in many levels: it doesn't try to overcome any pure efficiency problem, it exposes two types and the implicit contract logic can be circumvented by laissez-faire calls to them:
+This is not the case for the `now` object in many levels: it doesn't try to overcome any pure efficiency problem, it doesn't expose one type but two, and the implicit contract logic can be circumvented by laissez-faire calls to them:
 ```javascript
 function () {
   const now = {
@@ -56,7 +56,7 @@ function () {
   return localizedNow;
 };
 ```
-As hiring interviews demonstrate, there is a need for data structures and intensive computing in applications, and every programmer should be up-to-date if not mastering them, but the leading cause of problems in big applications is accidental and most of the times related to the state management dynamics... because Javascript is terrible when it comes to securing an object state.
+As hiring interviews demonstrate, there is a need for data structures and intensive computing in applications, and every programmer should be up-to-date if not mastering them, but the leading cause of problems in big applications is accidental and most of the times related to the state management dynamics; because Javascript is terrible when it comes to securing an object state.
 
 | FP appeal         | DS appeal        |
 |-------------------|------------------|
