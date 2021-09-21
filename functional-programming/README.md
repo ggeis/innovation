@@ -269,3 +269,5 @@ And here comes the first-of-many digression from the object-oriented philosophy,
 Javascript itself offers various levels and flavours of immutability (constants, spread operator, `Object` assign, freezing and sealing, `Object` accessor customization, using pure `Array` methods, Value Object pattern) that should be enough for quite a number of cases. It's important to note that all these approaches operate *shallow immutability*.
 
 But if we find ourselves with the uncommon need to recursively freeze a deeply entranched object, the first thing we may do is take a step back and reconsider if our program and data model is robust enough. If thats the case (for example in inherently deep problems like trees, combinatorials, or just some legacy objects that use very nested mutating structures) we can use a third-party library like Immutable.js, a Typescript solution similar to the one mentioned previously, or a more agnostic functional programming solution called *lens*, or functional reference, that allows for immutably manipulate the attributes of stateful data types. We will dedicate a chapter to them later.
+
+Next: [Objects](../objects/README.md)
