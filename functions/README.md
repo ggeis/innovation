@@ -116,6 +116,6 @@ function() {
   const wholeHour = (date) => date.round({ smallestUnit: 'hour', roundingMode: 'floor' });
   const uKHour = compose(localizeDate('en-UK'), wholeHour);
   const date = Temporal.now.plainDateTimeISO();
-  return uKHour(date));
+  return uKHour(date);
 }
 ```
