@@ -69,7 +69,7 @@ We could argue that
 ```typescript   
 const uKHour = (date) => localizeUk(wholeHour(date));
 ```
-would do the same and removing the `compose` dependency. And that is completely the case but we would then be unnecessarily "massaging" the data (notice how there is no reference to `date` in the original `uKHour`) and slightly defocusing from the expression of the pure behavior we are looking for. With `compose` we are separating the combined functions declaration from the strict evaluation of them. Also, as more complex use cases come for, especially working with list and graphs, or as soon as we are bringing in other functional structures, composing higher-order functions can do more for us.
+would do the same and removing the `compose` dependency. And that is completely right, but we would then be unnecessarily "massaging" the data (notice how there is no reference to `date` in the original `uKHour`) and slightly defocusing from the expression of the pure behavior we are looking for. With `compose` we are separating the combined functions declaration from the strict evaluation of them. Also, as more complex use cases come for, especially working with list and graphs, or as soon as we are bringing in other functional structures, composing higher-order functions can do more for us.
 ```typescript   
 const toUpperCase = (str) => str.toUpperCase();
 const upperCaseUKHour = compose(toUpperCase, uKHour);
