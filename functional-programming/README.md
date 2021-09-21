@@ -142,6 +142,9 @@ raiseToZero(IntensiveHundred);
   Every program holds state. The real question is whether it qualifies as functional state, there is different ways of handling state in a functional way: there is subtle differences between the different types of state access (read-only, write-only, read/write), and strategies to do it safely (change detection, types, reactivity...), there is also advanced functional structures that camouflage shared state and other effects in boxes called monads that are compatible with pure functions, we'll arrive there at some point, but for now let's say the first functional measure against shared state is immutability.
   
   * * *
+  
+  These are the causes of side-effects but most of the times they concur as a mix of them. Javascript deliberated flexibility and ubiquitous vocation makes effectful computations and impurity a great deal of our codebases.
+  
   ### An unexpected plot twist
   
   There is two sides of purity: internal and external. It's convenient that a function is pure both from the inside and the outside, but by convention purity qualification is decided on the external.
@@ -186,7 +189,6 @@ Referencial transparency, also called idempotence, exists when there exists a pu
 This implies all the majesty of *sustituability*: we can replace a pure function with its output value and the application will keeping doing exactly the same. 
 
 With substituability comes easier equational reasoning, rewrittability and memoization.
-These are the causes of side-effects but most of the times they concur as a mix of them. Javascript deliberated flexibility and ubiquitous vocation makes effectful computations and impurity a great deal of our codebases.
 
 *Refactor pure functions is the easiest path to recycling, gradually transform the functions you have into the functions you need*
 
