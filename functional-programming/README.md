@@ -86,7 +86,7 @@ throw new Error('Error message');
 
 - **Continuations**
  
- This type of effects impact more on the `goto`-featured programming languages. As Javascript is not one of those, continuation effects often refer to callback origin non-terminating effects.
+ This type of effects impact more on the `goto`-featured programming languages. As Javascript is not one of those, continuation effects often refer loosely to callback origin non-terminating effects.
 
 - **I/O**
 
